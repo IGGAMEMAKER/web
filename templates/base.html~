@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css"> 
+        <!--link rel="stylesheet" href="/css/bootstrap.css"--> 
+        <!--link rel="stylesheet" href="/style.css"--> 
+    </head>
+	
+    <body>
+        <div class="row-fluid">
+            <div class="span2">
+            </div>
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <a class="brand" href="/asking">Ask Gaga</a>
+
+                    <ul class="nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="../ask/">Ask</a></li>
+		    <li>     </li>
+                    </ul>
+                    <div class="span2">
+                        <form class="navbar-search pull-right">
+                            <input type="text" class="search-query" placeholder="Search" style="margin: 0 -35px 0 0">
+                        </form>
+                    </div>
+                    <div class="span4 pull-right">
+			{% include "auth.html" %} 
+
+                           
+                    </div>             
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="span8">
+                    {% block main %}
+                    {% endblock %}
+                </div>
+                <div class="span4">
+                    <div>                        
+                        <h3>Best users</h3>
+                        <ul>
+                            <li>GaginhoUno</li>
+                            <li>GaginhoDos</li>
+                            <li>GaginhoTres</li>
+                    </div>
+		    <div>
+			<h3>Popular tags</h3>
+			<a href="#">football</a>,
+			<a href="#">programming</a>,
+			<a href="#">games</a>,
+			<a href="#">music</a>,
+		    </div>
+
+                    
+                </div>
+            </div>
+        </div>   
+        
+        <!--script src="/js/dropdown.js"></script-->
+
+    </body>
+</html>

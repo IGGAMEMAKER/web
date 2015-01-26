@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="row"></div>
+<div class="area">
+	<form method="post" action="../reg_user/" class="form-horizontal">
+		{% csrf_token %}
+		<div class="heading"><h3 class="form-heading">Register</h3></div>
+		<div class="control-group">
+			<label class="control-label" for="Username">Login</label>
+			<div class="controls">
+				<input id="Username" name="Username" placeholder="Your username" type="text">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="Email">Email</label>
+			<div class="controls">
+				<input id="Email" name="Email" placeholder="Your email" type="text">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="Nickname">Nickname</label>
+			<div class="controls">
+				<input id="Nickname" name="Nickname" placeholder="Your nickname" type="text">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="Password">Password</label>
+			<div class="controls">
+				<input id="Password" name="Password" placeholder="Your password" type="password">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="Password2">Repeat Password</label>
+			<div class="controls">
+				<input id="Password2" name="Password2" placeholder="Repeat Your password" type="password">
+			</div>
+		</div>
+		
+		
+		<div class="control-group">
+			<div class="controls">
+			{% if error %}
+			<b>ERROR: {{error}}</b>
+			{% endif %}
+			<label class="checkbox"><input type="checkbox">Keep me signed in </label>
+			<button class="btn btn-success" type="submit">Register</button> <button class="btn" type="button">Help</button>
+			
+			</div>
+			<button class="close" data-dismiss="alert" type="button">×</button> 
+			
+		</div>
+	</form>
+</div>
+
+{% endblock %}

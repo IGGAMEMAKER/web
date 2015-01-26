@@ -1,0 +1,3 @@
+[Mon Jan 19 20:04:43.410573 2015] [autoindex:error] [pid 4528] [client 127.0.0.1:50875] AH01276: Cannot serve directory /home/askGaga/: No matching DirectoryIndex (index.html,index.cgi,index.pl,index.php,index.xhtml,index.htm) found, and server-generated directory index forbidden by Options directive
+[Mon Jan 19 20:04:50.393238 2015] [:error] [pid 4525] [client 127.0.0.1:50876] Target WSGI script not found or unable to stat: /home/askGaga/wsgi-scripts/helloworld.wsgi
+[Tue Jan 20 03:03:44.932851 2015] [autoindex:error] [pid 1148] [client 127.0.0.1:42662] AH01276: Cannot serve directory /home/askGaga/: No matching DirectoryIndex (index.html,index.cgi,index.pl,index.php,index.xhtml,index.htm) found, and server-generated directory index forbidden by Options directive

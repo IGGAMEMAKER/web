@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block main %} 
+
+<h2>Best questions</h2>
+
+{% for q in questions %}
+    <div class="row">
+        <div class="question">
+            <div class="row">
+                <div class="span1">
+                        <img src="http://wallpaperest.com/wallpapers/real-madrid-santiago-bernabeu-football_066690.png" class="img-polaroid">
+                               
+                </div>
+                <div class="span4">
+                    <h4><a href="question/?num={{ q.id }}">{{ q.title }}</a></h4>
+                    <p>{{ q.text.text }}</p>
+		    <p>Author {{ q.text.author.user.username }}</p>
+                    <p>Tags: TRololo</p>
+                    <br>
+
+
+                    <a href="question/?num={{ q.id }}#ANCHOR" class="btn btn-primary">Answer</a>    
+                    <a href="../likeIt/?positive=True&tset={{q.text.id}}&num={{q.id}}" class="icon-thumbs-up"></a>
+                        <a class="badge">{{ q.text.likes }}</a>
+                    <a href="../likeIt/?positive=True&tset={{q.text.id}}&num={{q.id}}" class="icon-thumbs-down"></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<div class="pagination pagination-centered">
+  <ul>
+		<li> <a href="?page={{ 1 }}">Begin</a></li>
+		<li> <a href="?page={{ prev }}">Prev</a></li>
+
+		<li> <a href="?page={{ number }}">{{ number }}</a></li>
+
+		<li> <a href="?page={{ next }}">Next</a></li>
+		<li> <a href="?page={{ max_num }}">End</a></li>
+
+  </ul>
+</div>
+
+{% endblock %}                    

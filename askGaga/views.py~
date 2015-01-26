@@ -1,0 +1,352 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.contrib import auth
+from django.contrib.auth import authenticate, login
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.http import HttpResponse, HttpResponseRedirect,HttpResponseNotFound, Http404
+from ask.models import Profile, Question, Answer, Like, TextSet
+from django.contrib.auth.models import User
+
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+
+from django.core.context_processors import csrf
+#, Tag
+
+from django.shortcuts import redirect, render_to_response
+
+def default(request):
+	return HttpResponse(["You are in /"])
+
+def signup(request):
+	return render(request, 'signup.html')
+
+def register(request):
+	#remember password
+	return render(request, 'register.html')
+
+def reg_user(request):
+	context = {}
+	u_name = request.POST.get('Username','')	
+	print u_name
+	if (User.objects.filter(username=u_name).exists()):
+		context['error']="This login already exists!"
+		return render(request, 'register.html',context)
+
+	e_mail = request.POST.get('Email','')#print e_mail
+	n_name = request.POST.get('Nickname','')#print n_name
+	p_word = request.POST.get('Password','')#print p_word
+	p_word2 = request.POST.get('Password2','')#print p_word2
+	
+	
+	if (p_word!=p_word2):
+		context['error']="Rewrite your password!"
+		return render(request, 'register.html',context)
+	#print (u_name == "")	print u_name
+	if (u_name == "" or p_word == "" or p_word2 == ""):
+		context['error']="Fill all fields, please!"
+		return render(request, 'register.html',context)
+	
+	user = User.objects.create_user(u_name, e_mail, p_word)
+	user.last_name = n_name
+	user.save()
+	print 'ids'
+	#profile = Profile.objects.create(user_id=user.id, rating = 0)
+	profile = Profile.objects.create(user=user, rating = 0)
+	profile.save()
+	print user.id
+	print profile.id
+	arguments={}
+	arguments['u_name']=u_name
+	arguments['p_word']=p_word
+	return log_in(request,arguments)
+	# At this point, user is a User object that has already been saved
+	# to the database. You can continue to change its attributes
+	# if you want to change other fields.	
+	return render(request, 'index.html')
+
+def debug_print(request):
+	output = '<html><body>Hello in /helloworld <br>'
+
+	GET = request.GET
+	POST = request.POST
+	output += "GET params: <br>"
+	#for key in GET:
+		#print GET[key]
+	for key in POST:
+		output+= key+"=" + POST[key]
+	return HttpResponse([output])
+
+@login_required(login_url='login')
+def profile(request):
+	context = {}	
+	u_name = request.POST.get('Username','')
+	print u_name
+	e_mail = request.POST.get('Email','')#print e_mail
+	n_name = request.POST.get('Nickname','')#print n_name	
+
+	user = request.user
+	prof = Profile.objects.get(user=user)
+	
+	print 'Was'
+	print user.username
+	print user.email
+	print prof.nickname
+	if (u_name=="" or n_name==""):
+		context['error']="Fill All fields!"
+		return render(request, 'profile.html',context)
+	user.username= u_name
+	user.email = e_mail
+	prof.nickname= n_name
+	user.save()
+	prof.save()
+	print 'Become'
+	print user.username
+	print user.email
+	print prof.nickname
+
+#	if (User.objects.filter(username=request.user.username).exists()):
+#		
+#		return render(request, 'register.html',context)
+	
+	
+	return redirect('/')
+	return render(request, 'profile.html')
+
+@login_required(login_url='login')
+def likeIt(request):
+	context = { }
+	print 'Trying to like'
+	print request.GET.get('positive')
+	text_set_id = request.GET.get('tset', 1)  #like destination
+	positive = request.GET.get('positive', 1) #like or dislike
+	print positive
+	pagenum = request.GET.get('num', 1) 
+	author = Profile.objects.get(user_id=request.user.id)
+	
+	t_set = TextSet.objects.get(id=text_set_id)
+
+	if (Like.objects.filter(text_id=text_set_id, author=author).exists()):
+		print 'It exists!'
+		like=Like.objects.get(text_id=text_set_id, author=author)
+	else:
+		print 'It is new one'
+		like=None
+
+	print 'LikeStatus:' + str(like) + str(positive)
+	if (like is not None):
+		print 'comparing: ' + str(like.positive) +' ' + str(positive)
+		if (str(like.positive) == str(positive) ): #if we clicked same like twice - delete it
+			print 'DELETE like'
+			like.delete()
+			#print 'was:' + str(t_set.likes)
+				#t_set.likes = UpdateLikeCount(t_set)
+			#print 'become:' + str(t_set.likes)
+			#return render(request, 'question.html',context)
+		else:
+			print 'CHANGE like'
+			like = Like.objects.get(text_id=text_set_id, author=author)
+			print 'was:' + str(like.positive)
+			
+
+			if (str(positive)=="False"):
+				like.positive=False
+			else:
+				like.positive=True
+			
+			like.save()
+			print 'now:' + str(like.positive)
+	else:
+		print 'CREATE like'
+		if (str(positive)=="False"):
+			Like.objects.create(author=author, positive=False, text_id=t_set)
+		else:
+			Like.objects.create(author=author, positive=True, text_id=t_set)
+
+	print 'was:' + str(t_set.likes)
+	pos = Like.objects.filter(text_id=t_set, positive=True).count()
+	neg = Like.objects.filter(text_id=t_set, positive=False).count()
+	total= int(pos)-int(neg)
+	print 'Likes:' +str(pos) + ' Dislikes:' + str(neg) + '=' + str(total)
+	#t_set.likes=total
+	#t_set.save()
+	TextSet.objects.filter(id=text_set_id).update(likes= int(total))
+	print 'become:' + str(t_set.likes)
+	context['num']=pagenum
+		#return render(request, 'question.html',context)
+	return redirect('../question/?num=' +str(pagenum))
+
+def qw(request, num=1):
+	context = { }
+	num = request.GET.get('num', 1)
+	
+	qSet = Question.objects.get(id=num)
+	answers = Answer.objects.filter(question_id=num).prefetch_related('text')#'author',
+	context['q'] = qSet
+	context['num'] = num
+	context['answers']=answers
+	context['count']=answers.count()
+	
+
+	return render(request, 'question.html',context)
+
+def log_in(request, arguments={}):
+	print('436')
+	print(request.path)
+	print arguments
+	goto=request.META.get('HTTP_REFERER')
+	goto=request.GET.get('next','/')
+	print 'going to:' + str(goto)
+#	print goto
+	args = {}
+	args.update(csrf(request))
+	u_name = request.POST.get('username','')
+	p_word = request.POST.get('password','')
+	if (u_name =="" and p_word==""):
+		u_name = arguments['u_name']
+		p_word = arguments['p_word']
+	print 'Hey!' + str(u_name) + ' ' + str(p_word)
+	user = authenticate(username=u_name, password=p_word)
+	if user is not None:
+		if user.is_active:
+			print(" Redirect to a success page.")
+			auth.login(request, user)
+			if (goto==""):
+				goto='../'
+			print 'cur Go to'
+			print goto
+			return redirect(goto)
+		    #'/'
+		else:
+			print 320
+			args['login_error'] = "User Not Found"
+			return render_to_response('login.html', args)
+		    # Return a 'disabled account' error message
+	else:
+		# Return an 'invalid login' error message.
+		print 10
+		return render_to_response('login.html', args)
+def logout(request):
+	auth.logout(request)
+	return redirect('/')
+
+def index(request):
+	context = { }
+	qSet = Question.objects.all().prefetch_related('text')
+
+	pager = Paginator(qSet, 3)
+	page = request.GET.get('page', 1)
+	
+	number=request.GET.get('page', 1)
+	
+	context['number']=number
+	context['max_num']=pager.num_pages
+
+	if (int(context['number']) > 1):
+		context['prev']=int(page) - 1
+	else:
+		context['prev']=1
+
+	if (int(context['number']) < int(context ['max_num']) ):
+		context['next']=int(page) + 1
+	else:
+		context['next']=page
+
+	try:
+		context['questions'] = pager.page(page).object_list
+	except EmptyPage:
+		raise Http404
+	except PageNotAnInteger:
+		context['number']=1
+		context['questions'] = pager.page(1).object_list
+		context['next']=3
+		context['number']=2
+		context['prev']=1
+		
+
+	context['pager'] = pager
+	return render(request, 'index.html',context)
+#{'question': question, 'answers': answers})
+
+def login(request):
+	args={}
+	args['next'] = request.GET.get('next','')
+	return render(request, 'login.html',args)
+
+def simple(request):
+	return render(request, 'simple.html')
+
+@login_required(login_url='login')
+def answer(request):
+	args = {}
+	args.update(csrf(request))
+	
+	question_id = request.GET.get('num','')
+	text = request.POST.get('Answer','')
+
+	if (text==""):
+		return qw(request)
+	user = request.user
+	u_id = user.id
+	
+	print 'Logs' + str(question_id) + str(user) + str(u_id)
+	
+	author = Profile.objects.get(user_id=u_id)
+	question = Question.objects.get(id=question_id)
+	tset = TextSet.objects.create(author=author, likes=0, text=text)
+	Answer.objects.create(text=tset, question=question)
+	return qw(request)
+
+@login_required(login_url='login') #redirect when user is not logged in
+def ask(request):
+	print('Ask!')
+	print(request.path)
+	user = request.user
+#	print 'AuthStatus'
+#	print user.is_authenticated
+#	if (user.is_authenticated == False):
+#		return render(request, '../login.html')
+	args = {}
+	args.update(csrf(request))
+	title = request.POST.get('Title','')
+	text = request.POST.get('Question','')
+	tags = request.POST.get('Tags','')
+	
+	print(title + " " + text)
+	if (title =="" or text == "" or tags == ""):
+		args['error']="Fill all fields, please!"
+		return render(request, 'ask.html',args)
+	#if (Question.objects.filter(text.text=text, title=title).exists()):
+	#	args['error']="This question was asked already!"
+	#	return render(request, 'ask.html',args)
+
+	print 'User:'
+	
+	profile = Profile.objects.get(user_id=user.id)
+	#print usr + " " + usr.username
+	#u_id=usr.id
+	#print u_id
+	tset = TextSet.objects.create(author=profile, likes=0, text=text)
+	q = Question.objects.create(text=tset, title=title,view_counter=0)
+	q.save()
+	args['num']=q.id
+	args['q']=q
+	#return render_to_response('question.html/?num='+str(q.id), args)
+	#return render_to_response('question.html', args)
+	return render(request, 'question.html',args)
+
+
+def helloworld(request):
+    output = '<html><body>Hello in /helloworld <br>'
+    GET = request.GET
+    POST = request.POST
+    output += "GET params: <br>"
+    for key in GET:
+        output += key+"=" + GET[key]+ ";<br>"
+    output += "POST params: <br>"
+    for key in POST:
+        output += key+"=" + POST[key]+ ";<br> "
+    return HttpResponse([output])
+

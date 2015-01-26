@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="row"></div>
+<div class="area">
+		{% if next %}
+		<b>Going to:{{ next }}</b>
+		{% endif %}
+		<form action='../log_in/?next={{next}}' method='post'>
+			{% csrf_token %}
+		    <label for="username">Логин:</label><input type="text" name="username" value="" id="username">
+		    <label for="password">Пароль:</label><input type="password" name="password" value="" id="password">
+			{{ login_error }}
+		    <input type="submit" value="login" />
+		    <!--input type="hidden" name="next" value='login.html' /-->
+		</form>
+
+
+		<div >
+			<!--button class="close" data-dismiss="alert" type="button">×</button--> 
+			<a href="../register">Create an account</a>
+		</div>
+
+	
+</div>
+
+{% endblock %}

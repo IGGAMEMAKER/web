@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block main %} 
+
+<h2>QUESTION!!!!</h2>
+
+
+    <div class="row">
+        <div class="question">
+            <div class="row">
+                <div class="span1">
+                        <img src="http://wallpaperest.com/wallpapers/real-madrid-santiago-bernabeu-football_066690.png" class="img-polaroid">
+                               
+                </div>
+                <div class="span4">
+                    <h4><a href="#">{{ q.title }}</a></h4>
+                    <p>{{ q.text.text }}</p>
+                    <!--p>Tags: I'm a QUESTION!!!</p-->
+			<div class="row">
+				<div class="span5">
+					<p>Tags: {% for tag in q.tags.all %}
+					<a>{{ tag.word }}</a>
+					{% endfor %}
+					</p>
+				</div>
+			</div>
+                    <br>
+			<h4>Author: {{ q.text.author.user.username }}</h4>
+			{% csrf_token %}
+                    <a href="#ANCHOR" class="btn btn-primary">Answer</a>    
+                    <a href="../likeIt/?positive=True&tset={{q.text.id}}&num={{q.id}}" class="icon-thumbs-up"></a>
+                        <a class="badge">{{ q.text.likes }}</a>
+                    <a href="../likeIt/?positive=False&tset={{q.text.id}}&num={{q.id}}" class="icon-thumbs-down"></a>
+
+                </div>
+	    </div>
+		<div class="span6">
+			<b>Total: {{ count }} ANSWERS</b>
+		    
+		    <div class="row">
+			{% for a in answers %}
+			<div class="question">
+			    <div class="row">
+				<div class="span1"><img src="http://3.bp.blogspot.com/-fSRD9SLNzHo/UVwhXCSqjZI/AAAAAAAAF8o/Pg1tdZtcL70/s1600/anonymous_avatar.png" class="img-polaroid"></div>
+				<div class="span4" >
+				    <h4>Author: {{ a.text.author.user.username }}</h4>
+				    <p>{{ a.text.text }}</p>
+				    
+				    <br>
+
+				    <!--a href="#" class="btn btn-primary">Answer (0)</a-->
+				    <a href="../likeIt/?positive=True&tset={{a.text.id}}&num={{q.id}}" class="icon-thumbs-up"></a>
+				        <a class="badge">{{ a.text.likes }}</a>
+				    <a href="../likeIt/?positive=False&tset={{a.text.id}}&num={{q.id}}" class="icon-thumbs-down"></a>
+				</div>
+			    </div>
+			</div>
+			{% endfor %}
+		   
+			<form method="post" action="../answer/?num={{ q.id }}#ANCHOR" class="form-horizontal">
+				{% csrf_token %}
+				{% if user.is_authenticated %}
+				<div class="heading" id="ANCHOR"><h3 class="form-heading">Write your answer here!</h3></div>
+				<input id="Answer" name="Answer" placeholder="Paste your answer here" type="text">
+				
+				<button class="btn btn-success" type="submit">Answer!</button>
+				{% else %}
+				<div class="heading" id="ANCHOR"><h3 class="form-heading">Please, <a href="../login/"><b> Log in </b></a> to add comments</h3></div>
+				{% endif %}
+			</form>
+		 </div>
+		
+            </div>
+        </div>
+    </div>
+
+
+<div class="pagination pagination-centered">
+  <ul>
+	<li><a href="/index?page={{ 1 }}">I'M TIRED, GO HOME</a></li>
+  </ul>
+</div>
+
+{% endblock %}                    

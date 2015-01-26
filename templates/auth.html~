@@ -1,0 +1,15 @@
+			{% if user.is_authenticated %}
+			    
+				<div class="row">
+				<img src="http://i.telegraph.co.uk/multimedia/archive/02320/modric_2320933b.jpg" class="img-circle userpic" height="64" width="64">
+				{% load staticfiles %}
+					<!--img src="{% static 'anon.jpg' %}" alt="My image"/-->
+				
+				<p>Welcome, {{ user.username }}!   <a href="/logout"><b> Log out </b></a> or <a href="/profile/"><b> Edit Profile </b></a></p>
+				
+				</div>
+			{% else %}
+			    <B>Welcome, new user.</B><br><B> Please <a href="/login/"><b> Log in </b></a> or <a href="/register/"><b> Register </b></a></B>
+				<!--a href="/login/"><b> Log in </b></a>
+				<a href="/register/"><b> Register </b></a-->
+			{% endif %}
