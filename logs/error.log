@@ -1,3 +1,64 @@
-[Mon Jan 19 20:04:43.410573 2015] [autoindex:error] [pid 4528] [client 127.0.0.1:50875] AH01276: Cannot serve directory /home/askGaga/: No matching DirectoryIndex (index.html,index.cgi,index.pl,index.php,index.xhtml,index.htm) found, and server-generated directory index forbidden by Options directive
-[Mon Jan 19 20:04:50.393238 2015] [:error] [pid 4525] [client 127.0.0.1:50876] Target WSGI script not found or unable to stat: /home/askGaga/wsgi-scripts/helloworld.wsgi
-[Tue Jan 20 03:03:44.932851 2015] [autoindex:error] [pid 1148] [client 127.0.0.1:42662] AH01276: Cannot serve directory /home/askGaga/: No matching DirectoryIndex (index.html,index.cgi,index.pl,index.php,index.xhtml,index.htm) found, and server-generated directory index forbidden by Options directive
+
+[Tue Jan 27 15:15:01.189220 2015] [:error] [pid 29271] [client 127.0.0.1:49960] mod_wsgi (pid=29271): Target WSGI script '/home/askGaga/askGaga/wsgi.py' cannot be loaded as Python module.
+[Tue Jan 27 15:15:01.189310 2015] [:error] [pid 29271] [client 127.0.0.1:49960] mod_wsgi (pid=29271): Exception occurred processing WSGI script '/home/askGaga/askGaga/wsgi.py'.
+[Tue Jan 27 15:15:01.189354 2015] [:error] [pid 29271] [client 127.0.0.1:49960] Traceback (most recent call last):
+[Tue Jan 27 15:15:01.189391 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/home/askGaga/askGaga/wsgi.py", line 14, in <module>
+[Tue Jan 27 15:15:01.189505 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     application = get_wsgi_application()
+[Tue Jan 27 15:15:01.189535 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/local/lib/python2.7/dist-packages/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Jan 27 15:15:01.190044 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     django.setup()
+[Tue Jan 27 15:15:01.190109 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/local/lib/python2.7/dist-packages/django/__init__.py", line 20, in setup
+[Tue Jan 27 15:15:01.190675 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+[Tue Jan 27 15:15:01.190702 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 46, in __getattr__
+[Tue Jan 27 15:15:01.191525 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     self._setup(name)
+[Tue Jan 27 15:15:01.191550 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 42, in _setup
+[Tue Jan 27 15:15:01.191634 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     self._wrapped = Settings(settings_module)
+[Tue Jan 27 15:15:01.191651 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 94, in __init__
+[Tue Jan 27 15:15:01.191683 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Tue Jan 27 15:15:01.191700 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+[Tue Jan 27 15:15:01.191797 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     __import__(name)
+[Tue Jan 27 15:15:01.191905 2015] [:error] [pid 29271] [client 127.0.0.1:49960]   File "/home/askGaga/askGaga/settings.py", line 29
+[Tue Jan 27 15:15:01.191924 2015] [:error] [pid 29271] [client 127.0.0.1:49960]     ALLOWED_HOSTS = [*]
+[Tue Jan 27 15:15:01.191937 2015] [:error] [pid 29271] [client 127.0.0.1:49960]                      ^
+[Tue Jan 27 15:15:01.191947 2015] [:error] [pid 29271] [client 127.0.0.1:49960] SyntaxError: invalid syntax
+[Tue Jan 27 15:15:08.864651 2015] [:error] [pid 29275] [client 127.0.0.1:49961] mod_wsgi (pid=29275): Target WSGI script '/home/askGaga/askGaga/wsgi.py' cannot be loaded as Python module.
+[Tue Jan 27 15:15:08.864753 2015] [:error] [pid 29275] [client 127.0.0.1:49961] mod_wsgi (pid=29275): Exception occurred processing WSGI script '/home/askGaga/askGaga/wsgi.py'.
+[Tue Jan 27 15:15:08.864829 2015] [:error] [pid 29275] [client 127.0.0.1:49961] Traceback (most recent call last):
+[Tue Jan 27 15:15:08.864901 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/home/askGaga/askGaga/wsgi.py", line 14, in <module>
+[Tue Jan 27 15:15:08.865052 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     application = get_wsgi_application()
+[Tue Jan 27 15:15:08.865089 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/local/lib/python2.7/dist-packages/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Jan 27 15:15:08.865200 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     django.setup()
+[Tue Jan 27 15:15:08.865234 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/local/lib/python2.7/dist-packages/django/__init__.py", line 20, in setup
+[Tue Jan 27 15:15:08.865370 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+[Tue Jan 27 15:15:08.865405 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 46, in __getattr__
+[Tue Jan 27 15:15:08.865645 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     self._setup(name)
+[Tue Jan 27 15:15:08.865684 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 42, in _setup
+[Tue Jan 27 15:15:08.865733 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     self._wrapped = Settings(settings_module)
+[Tue Jan 27 15:15:08.865759 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 94, in __init__
+[Tue Jan 27 15:15:08.865799 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Tue Jan 27 15:15:08.865825 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+[Tue Jan 27 15:15:08.865961 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     __import__(name)
+[Tue Jan 27 15:15:08.866095 2015] [:error] [pid 29275] [client 127.0.0.1:49961]   File "/home/askGaga/askGaga/settings.py", line 29
+[Tue Jan 27 15:15:08.866127 2015] [:error] [pid 29275] [client 127.0.0.1:49961]     ALLOWED_HOSTS = [*]
+[Tue Jan 27 15:15:08.866141 2015] [:error] [pid 29275] [client 127.0.0.1:49961]                      ^
+[Tue Jan 27 15:15:08.866153 2015] [:error] [pid 29275] [client 127.0.0.1:49961] SyntaxError: invalid syntax
+[Tue Jan 27 15:15:20.937835 2015] [:error] [pid 29328] [client 127.0.0.1:49962] mod_wsgi (pid=29328): Target WSGI script '/home/askGaga/askGaga/wsgi.py' cannot be loaded as Python module.
+[Tue Jan 27 15:15:20.938016 2015] [:error] [pid 29328] [client 127.0.0.1:49962] mod_wsgi (pid=29328): Exception occurred processing WSGI script '/home/askGaga/askGaga/wsgi.py'.
+[Tue Jan 27 15:15:20.938071 2015] [:error] [pid 29328] [client 127.0.0.1:49962] Traceback (most recent call last):
+[Tue Jan 27 15:15:20.938121 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/home/askGaga/askGaga/wsgi.py", line 14, in <module>
+[Tue Jan 27 15:15:20.938303 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     application = get_wsgi_application()
+[Tue Jan 27 15:15:20.938342 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/local/lib/python2.7/dist-packages/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Jan 27 15:15:20.938454 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     django.setup()
+[Tue Jan 27 15:15:20.938488 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/local/lib/python2.7/dist-packages/django/__init__.py", line 20, in setup
+[Tue Jan 27 15:15:20.938590 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+[Tue Jan 27 15:15:20.938623 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 46, in __getattr__
+[Tue Jan 27 15:15:20.938834 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     self._setup(name)
+[Tue Jan 27 15:15:20.938871 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 42, in _setup
+[Tue Jan 27 15:15:20.938920 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     self._wrapped = Settings(settings_module)
+[Tue Jan 27 15:15:20.938947 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/local/lib/python2.7/dist-packages/django/conf/__init__.py", line 94, in __init__
+[Tue Jan 27 15:15:20.938988 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Tue Jan 27 15:15:20.939014 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+[Tue Jan 27 15:15:20.939238 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     __import__(name)
+[Tue Jan 27 15:15:20.939341 2015] [:error] [pid 29328] [client 127.0.0.1:49962]   File "/home/askGaga/askGaga/settings.py", line 29
+[Tue Jan 27 15:15:20.939364 2015] [:error] [pid 29328] [client 127.0.0.1:49962]     ALLOWED_HOSTS = [*]
+[Tue Jan 27 15:15:20.939378 2015] [:error] [pid 29328] [client 127.0.0.1:49962]                      ^
+[Tue Jan 27 15:15:20.939391 2015] [:error] [pid 29328] [client 127.0.0.1:49962] SyntaxError: invalid syntax

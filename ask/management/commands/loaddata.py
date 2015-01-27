@@ -50,7 +50,7 @@ class Command(BaseCommand):
 
 		for i in range(0,int(options['questions'])):
 			tset= TextSet.objects.create(author_id=random.randint(1, 100), text = sentences(3), likes = random.randint(1, 100))
-			q = Question.objects.create(title = (sentence())[0:59],text=tset)
+			q = Question.objects.create(title = (sentence())[0:59],text=tset, view_counter=0)
 
 		#for i in range(0,int(options['upd'])):
 			#Question.objects.filter(id>0).update(likes = random.randint(1, 100) )

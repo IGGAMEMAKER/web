@@ -23,8 +23,7 @@ urlpatterns = patterns('',
 
 	url(r'^logout'  , views.logout, 	name='logout'),
 
-	
-	
+
 	url(r'^question/', views.qw, 	name='qw'),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^'	, views.index, 		name='index'),
